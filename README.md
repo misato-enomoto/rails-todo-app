@@ -108,7 +108,12 @@ bin/rails db:migrate
 bin/rails s
 ```
 
-## ER図
-
-（後で追加）
+## ログイン画面
+<img width="1238" height="909" alt="image" src="https://github.com/user-attachments/assets/336a69f0-1b55-46fd-ae04-c48217c47a58" />
+##タスク一覧
+<img width="1363" height="910" alt="image" src="https://github.com/user-attachments/assets/9f12c80f-70f8-4cf3-9eb3-4c5cc8672e1f" />
+##新規作成
+<img width="1427" height="912" alt="image" src="https://github.com/user-attachments/assets/cae650c0-4159-4553-81ca-04481cb5444d" />
+##編集画面
+<img width="1446" height="909" alt="image" src="https://github.com/user-attachments/assets/4d5c6fe5-26c2-4e61-a789-9c1a8be1fe07" />
 
