@@ -1,10 +1,55 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
-<%= render @task %>
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h1 class="h4 mb-0">タスク詳細</h1>
+    </div>
 
-<div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-  <%= link_to "Back to tasks", tasks_path %>
+    <div class="card-body">
+      <dl class="row mb-0">
+        <dt class="col-sm-3">タスク</dt>
+        <dd class="col-sm-9"><%= @task.title %></dd>
 
-  <%= button_to "Destroy this task", @task, method: :delete %>
+        <dt class="col-sm-3">ステータス</dt>
+        <dd class="col-sm-9">
+          <% if @task.completed? %>
+            <span class="badge text-bg-success">完了</span>
+          <% else %>
+            <span class="badge text-bg-secondary">未完了</span>
+          <% end %>
+        </dd>
+
+        <dt class="col-sm-3">目標期日</dt>
+        <dd class="col-sm-9">
+          <%= @task.due_date&.strftime("%Y/%m/%d %H:%M") || "-" %>
+        </dd>
+
+        <dt class="col-sm-3">完了日</dt>
+        <dd class="col-sm-9">
+          <%= @task.completed_at&.strftime("%Y/%m/%d %H:%M") || "-" %>
+        </dd>
+
+        <dt class="col-sm-3">メモ</dt>
+        <dd class="col-sm-9">
+          <%= simple_format(@task.memo.presence || "-") %>
+        </dd>
+      </dl>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-between align-items-center">
+
+        <div class="d-flex gap-2">
+          <%= link_to "一覧へ戻る", tasks_path, class: "btn btn-outline-primary" %>
+
+          <%= link_to "編集", edit_task_path(@task), class: "btn btn-outline-secondary" %>
+        </div>
+
+        <div>
+          <%= button_to "削除", @task, method: :delete, class: "btn btn-outline-danger" %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

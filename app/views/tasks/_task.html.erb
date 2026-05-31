@@ -1,12 +1,32 @@
-<div id="<%= dom_id task %>">
-  <div>
-    <strong>Title:</strong>
-    <%= task.title %>
-  </div>
+<tr id="<%= dom_id task %>">
+  <td><%= task.title %></td>
 
-  <div>
-    <strong>Completed:</strong>
-    <%= task.completed %>
-  </div>
+  <td>
+    <% if task.completed? %>
+      <span class="badge text-bg-success">完了</span>
 
-</div>
+    <% elsif task.due_date.present? && task.due_date < Date.current %>
+      <span class="badge text-bg-danger">期限切れ</span>
+
+    <% else %>
+      <span class="badge text-bg-secondary">未完了</span>
+    <% end %>
+  </td>
+
+  <td>
+    <%= task.due_date&.strftime("%Y/%m/%d %H:%M") || "-" %>
+  </td>
+
+  <td>
+    <%= task.completed_at&.strftime("%Y/%m/%d %H:%M") || "-" %>
+  </td>
+
+  <td>
+    <%= task.memo.presence || "-" %>
+  </td>
+
+  <td class="text-nowrap">
+    <%= link_to "詳細", task, class: "btn btn-sm btn-outline-primary" %>
+    <%= link_to "編集", edit_task_path(task), class: "btn btn-sm btn-outline-secondary" %>
+  </td>
+</tr>

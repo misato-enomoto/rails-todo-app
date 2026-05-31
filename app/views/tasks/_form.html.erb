@@ -1,9 +1,11 @@
 <%= form_with(model: task) do |form| %>
   <% if task.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved!!:</h2>
+    <div class="alert alert-danger">
+      <h2 class="h5">
+        <%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:
+      </h2>
 
-      <ul>
+      <ul class="mb-0">
         <% task.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,17 +13,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, "タスク", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-check mb-3">
+    <%= form.checkbox :completed, class: "form-check-input" %>
+    <%= form.label :completed, "完了", class: "form-check-label" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :due_date, "目標期日", class: "form-label" %>
+    <%= form.datetime_field :due_date, class: "form-control" %>
+  </div>
+
+  <% if task.persisted? %>
+    <div class="mb-3">
+      <%= form.label :completed_at, "完了日", class: "form-label" %>
+      <%= form.datetime_field :completed_at, class: "form-control" %>
+    </div>
+　<% end %>
+
+  <div class="mb-3">
+    <%= form.label :memo, "メモ", class: "form-label" %>
+    <%= form.text_area :memo, class: "form-control", rows: 4 %>
   </div>
 
   <div>
-    <%= form.label :completed, style: "display: block" %>
-    <%= form.checkbox :completed %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "登録", class: "btn btn-primary" %>
   </div>
 <% end %>

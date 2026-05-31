@@ -1,11 +1,17 @@
 <% content_for :title, "New task" %>
 
-<h1>New task</h1>
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h1 class="h4 mb-0">タスク新規作成</h1>
+    </div>
 
-<%= render "form", task: @task %>
+    <div class="card-body">
+      <%= render "form", task: @task %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to tasks", tasks_path %>
+    <div class="card-footer">
+      <%= link_to "一覧へ戻る", tasks_path, class: "btn btn-outline-primary" %>
+    </div>
+  </div>
 </div>
