@@ -3,34 +3,83 @@
 
   <% content_for :title, "タスク一覧" %>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1 class="mb-0">タスク一覧</h1>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">タスク一覧</h1>
 
-  <%= link_to "新規作成", new_task_path, class: "btn btn-primary" %>
-</div>
-
-  <div class="card shadow-sm">
-    <div class="card-body">
-
-      <table class="table table-hover align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>タスク</th>
-            <th>ステータス</th>
-            <th>目標期日</th>
-            <th>完了日</th>
-            <th>メモ</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @tasks.each do |task| %>
-            <%= render task %>
-          <% end %>
-        </tbody>
-      </table>
-
-    </div>
+    <%= link_to "新規作成", new_task_path, class: "btn btn-primary" %>
   </div>
+
+  <% if @tasks.any? %>
+    <div class="card shadow-sm d-none d-md-block">
+      <div class="card-body">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>タスク</th>
+              <th>ステータス</th>
+              <th>目標期日</th>
+              <th>完了日</th>
+              <th>メモ</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @tasks.each do |task| %>
+              <%= render task %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="d-md-none">
+      <% @tasks.each do |task| %>
+        <div class="card shadow-sm mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h2 class="h5 mb-0">
+                <%= task.title %>
+              </h2>
+
+              <% if task.completed? %>
+                <span class="badge text-bg-success">完了</span>
+              <% elsif task.due_date.present? && task.due_date < Time.current %>
+                <span class="badge text-bg-danger">期限切れ</span>
+              <% else %>
+                <span class="badge text-bg-secondary">未完了</span>
+              <% end %>
+            </div>
+
+            <div class="small text-muted mb-1">
+              目標期日:
+              <%= task.due_date&.strftime("%Y/%m/%d %H:%M") || "-" %>
+            </div>
+
+            <div class="small text-muted mb-2">
+              完了日:
+              <%= task.completed_at&.strftime("%Y/%m/%d %H:%M") || "-" %>
+            </div>
+
+            <% if task.memo.present? %>
+              <p class="mb-3">
+                <%= truncate(task.memo, length: 80) %>
+              </p>
+            <% end %>
+
+            <div class="d-grid gap-2">
+              <%= link_to "詳細", task, class: "btn btn-outline-primary btn-sm" %>
+              <%= link_to "編集", edit_task_path(task), class: "btn btn-outline-secondary btn-sm" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card shadow-sm">
+      <div class="card-body text-muted">
+        タスクはまだありません。
+      </div>
+    </div>
+  <% end %>
 </div>
